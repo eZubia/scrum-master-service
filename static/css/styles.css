@@ -1,0 +1,18 @@
+.mdl-layout__header-row {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+thead {
+    background-color: rgb(0, 0, 0);
+}
+
+.mdl-layout__drawer-button {
+    /*background-color: rgb(103, 58, 183);*/
+    color: rgb(255, 255, 255);
+
+}
+
+.white-background {
+    background-color:  white;
+}

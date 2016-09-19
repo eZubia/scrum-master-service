@@ -1,0 +1,12 @@
+.mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+  .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone(ng-repeat="backlog in liberaciones")
+      .mdl-card.mdl-shadow--2dp
+          .mdl-card__title
+              h2.mdl-card__title-text {{backlog.nombreRelease}}
+          .mdl-card__supporting-text
+              p.letras-negras {{backlog.descripcionRelease}}
+              form(action="/showReleaseBacklog" method="GET" class="form")
+                input(value="{{backlog._id}}" type="hidden" id="releaseElegido" name="releaseElegido")
+                button.mdl-button.mdl-js-button.mdl-js-ripple-effect(type="submit") Ver
+.mdl-card-2.mdl-shadow--2dp-2
+  a(class="mdl-button blank-historia-button" type="button" href="/addReleaseBacklog" ng-show="isOpen==='true' && (rolActual==='scrum-master' || rolActual==='product-owner')") Agregar Release BackLog

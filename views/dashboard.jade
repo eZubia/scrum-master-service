@@ -1,0 +1,76 @@
+extends ./index.jade
+block content
+  .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top(ng-controller="dashBoardController" ng-init="init('#{usuario._id}')")
+    .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone
+      div(class="demo-card-square mdl-card mdl-shadow--2dp")
+        div(class="mdl-card__title mdl-card--expand")
+          h1(class="mdl-card__title-text") Scrum Master
+        div(class="mdl-card__supporting-text")
+          h3 Total de proyectos en este rol: #{proyectos.scrum}
+          a(class="mdl-button" ng-click="getProyectosScrum()") Ver Proyectos
+    .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone
+      div(class="demo-card-square mdl-card mdl-shadow--2dp")
+        div(class="mdl-card__title mdl-card--expand")
+          h1(class="mdl-card__title-text") Proyect Owner
+        div(class="mdl-card__supporting-text")
+          h3 Total de proyectos en este rol: #{proyectos.owner}
+          a(class="mdl-button" ng-click="getProyectosOwner()") Ver Proyectos
+    .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone
+      div(class="demo-card-square mdl-card mdl-shadow--2dp")
+        div(class="mdl-card__title mdl-card--expand")
+          h1(class="mdl-card__title-text") Developer
+        div(class="mdl-card__supporting-text")
+          h3 Total de proyectos en este rol: #{proyectos.developer}
+          a(class="mdl-button" ng-click="getProyectosDeveloper()") Ver Proyectos
+    .mdl-cell.mdl-cell--12-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone
+      table.mdl-data-table.mdl-js-data-table.mdl-data-table.projects-table
+        thead
+          tr
+            th.mdl-data-table__cell--non-numeric Proyecto
+            th.mdl-data-table__cell--non-numeric Descripcion Proyecto
+            th.mdl-data-table__cell--non-numeric Fecha Arranque
+            th.mdl-data-table__cell--non-numeric Fecha Solicitud
+            th.mdl-data-table__cell--non-numeric
+        tbody
+            tr(ng-repeat="proyecto in proyectos")
+              td.mdl-data-table__cell--non-numeric
+                p.
+                  {{proyecto.nombreProyecto}}
+              td.mdl-data-table__cell--non-numeric
+                p.
+                  {{proyecto.descripcionProy}}
+              td.mdl-data-table__cell--non-numeric {{proyecto.fechaArranque | date:'yyyy-MM-dd'}}
+              td.mdl-data-table__cell--non-numeric {{proyecto.fechaSolicitud | date:'yyyy-MM-dd'}}
+              td.mdl-data-table__cell--non-numeric
+                form(action="/detalleproyecto" method="GET" class="form")
+                  input(value="{{proyecto._id}}" type="hidden" id="proyectoElegido" name="proyectoElegido")
+                  input(value="{{rolActual}}" type="hidden" id="rolActual" name="rolActual")
+                  button.mdl-button(type="submit") Ver Detalle del proyecto
+      button.mdl-button(id="show-newProyect" type="button") Nuevo Proyecto
+
+      dialog(class="mdl-dialog")
+        h2.mdl-dialog__title Nuevo Proyecto
+        form(action="/crearProyecto" method="POST" class="form")
+          div
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(type="text" id="nombreProyecto" name="nombreProyecto" style="color: black" required="required")
+                label(for="nombreProyecto" class="mdl-textfield__label") Nombre del Proyecto
+          div
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(type="date" id="fechaArranque" name="fechaArranque" style="color: black" required="required")
+                label(for="fechaArranque" class="mdl-textfield__label") Fecha de Arranque
+          div
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+              textarea(class="mdl-textfield__input" type="text" rows="4" id="descripcionProy" name="descripcionProy")
+              label(class="mdl-textfield__label" for="descripcionProy") Descripcion del Proyecto
+          button.mdl-button(type="submit") Crear Proyecto
+
+      script.
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#show-newProyect');
+        if (! dialog.showModal) {
+          dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function() {
+          dialog.showModal();
+        });

@@ -1,0 +1,10 @@
+.mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+  .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone(ng-repeat="historia in historias")
+      .mdl-card.mdl-shadow--2dp
+          .mdl-card__title
+              h2.mdl-card__title-text {{historia.nombre}}
+          .mdl-card__supporting-text
+              p(class="letras-negras").
+                {{historia.descripcion}}
+          div(class="mdl-card__actions mdl-card--border")
+            button.mdl-button.mdl-js-button.mdl-js-ripple-effect(ng-click="verDetalleHistoria(historia._id)") Detalles

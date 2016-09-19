@@ -1,0 +1,137 @@
+extends ./index.jade
+block content
+  .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top(ng-controller="showReleaseBacklogCtrl", ng-init="init('#{proyecto._id}','#{release._id}', '#{proyecto.abierto}', '#{rolActual}')")
+    .mdl-cell.mdl-cell--3-col-desktop.mdl-cell--3-col-tablet.mdl-cell--2-col-phone(ng-show="isOpen==='true' && (rolActual==='scrum-master' || rolActual==='product-owner')")
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text #{proyecto.nombreProyecto}
+        .mdl-card__supporting-text
+          p.letras-negras.
+            #{proyecto.descripcionProy}
+      br
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Release: #{release.nombreRelease}
+        .mdl-card__supporting-text
+          p.letras-negras.
+            #{release.descripcionRelease}
+      br
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Días para Finalizar: {{totalDias}}
+
+    .mdl-cell.mdl-cell--12-col-desktop.mdl-cell--12-col-tablet.mdl-cell--2-col-phone(ng-show="isOpen==='false' || rolActual ==='developer'")
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text #{proyecto.nombreProyecto}
+        .mdl-card__supporting-text
+          p.letras-negras.
+            #{proyecto.descripcionProy}
+      br
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Release: #{release.nombreRelease}
+        .mdl-card__supporting-text
+          p.letras-negras.
+            #{release.descripcionRelease}
+      br
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Días para Finalizar: {{totalDias}}
+
+
+    .mdl-cell.mdl-cell--9-col-desktop.mdl-cell--6-col-tablet.mdl-cell--5-col-phone(ng-show="isOpen==='true' && (rolActual==='scrum-master' || rolActual==='product-owner')")
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Historias sin Asignar
+      .mdl-card-2.mdl-shadow--6dp-2
+        .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+          .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--12-col-tablet.mdl-cell--2-col-phone(ng-repeat="historia in historias")
+              .mdl-card.mdl-shadow--2dp
+                  .mdl-card__title
+                      h2.mdl-card__title-text {{historia.nombre}}
+                  .mdl-card__supporting-text
+                      p.letras-negras.
+                        {{historia.descripcion}}
+                  div(class="mdl-card__actions mdl-card--border")
+                    button(class="mdl-button blank-sprint-button" type="button" ng-click="agregarHistoriaSprint(historia._id)") Agregar historia
+                    &nbsp;
+                    button(class="mdl-button blank-sprint-button" type="button" ng-click="verDetalleHistoria(historia._id)") Ver Detalle
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Historias para el Sprint
+      .mdl-card-2.mdl-shadow--2dp-2
+        .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+          .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone(ng-repeat="historia in historiasSprint")
+              .mdl-card.mdl-shadow--2dp
+                  .mdl-card__title
+                      h2.mdl-card__title-text {{historia.nombre}}
+                  .mdl-card__supporting-text
+                      p.letras-negras.
+                       {{historia.descripcion}}
+                   div(class="mdl-card__actions mdl-card--border")
+                      button(class="mdl-button blank-sprint-button" type="button" ng-click="verDetalleHistoria(historia._id)") Agregar historia
+    .mdl-cell.mdl-cell--3-col-desktop.mdl-cell--3-col-tablet.mdl-cell--2-col-phone(ng-if="isOpen==='true' && (rolActual==='scrum-master' || rolActual==='product-owner') && historiasSprint.length>0")
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Crear Sprint
+        .mdl-card__supporting-text
+          div
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(type="text" id="nombreSprint" name="nombreSprint" ng-model="sprint.nombreSprint" style="color: black" required="required")
+                label(for="nombreSprint" class="mdl-textfield__label") Nombre del Sprint
+          div
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+              textarea(class="mdl-textfield__input" type="text" ng-model="sprint.descripcionSprint" rows="4" id="descripcionSprint" name="descripcionSprint")
+              label(class="mdl-textfield__label" for="descripcionSprint") Descripción del Sprint
+          button.mdl-button(type="submit" ng-click="crearSprint()") Crear
+    .mdl-cell.mdl-cell--3-col-desktop.mdl-cell--12-col-tablet.mdl-cell--2-col-phone(ng-if="historiaSeleccionada!==''")
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Detalles De Historia
+        .mdl-card__supporting-text
+          .mdl-grid
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.nombre}}" id="nombreSprint" name="nombreSprint" style="color: black" readonly)
+                  label(for="nombreSprint" class="mdl-textfield__label") Nombre
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.descripcion}}" id="descripcionSprint" name="descripcionSprint" style="color: black" readonly)
+                  label(for="descripcionSprint" class="mdl-textfield__label") Descripción
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.cuando}}" id="cuandoSprint" name="cuandoSprint" style="color: black" readonly)
+                  label(for="cuandoSprint" class="mdl-textfield__label") Cuando
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.entonces}}" id="entoncesSprint" name="entoncesSprint" style="color: black" readonly)
+                  label(for="entoncesSprint" class="mdl-textfield__label") Entonces
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.como}}" id="comoSprint" name="comoSprint" style="color: black" readonly)
+                  label(for="comoSprint" class="mdl-textfield__label") Como
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.quiero}}" id="quieroSprint" name="quieroSprint" style="color: black" readonly)
+                  label(for="quieroSprint" class="mdl-textfield__label") Quiero
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.deTalManeraQue}}" id="deTalManeraQueSprint" name="deTalManeraQueSprint" style="color: black" readonly)
+                  label(for="deTalManeraQueSprint" class="mdl-textfield__label") De Tal Manera Que
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.prioridad}}" id="prioridadSprint" name="prioridadSprint" style="color: black" readonly)
+                  label(for="priordadSprint" class="mdl-textfield__label") Prioridad
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.tamanio}}" id="tamanioSprint" name="tamanioSprint" style="color: black" readonly)
+                  label(for="tamanioSprint" class="mdl-textfield__label") Tamaño
+          div(class="mdl-card__actions mdl-card--border")
+            button(class="mdl-button asignar-desarrollador-button" id="button-asignar-developer" type="button" ng-click="cerrarDetalle()") Cerrar Detalle
+    .mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--5-col-phone
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Sprints Actuales
+      .mdl-card-2.mdl-shadow--2dp-2
+        .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+          .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone(ng-repeat="sprint in sprints")
+              .mdl-card.mdl-shadow--2dp
+                  .mdl-card__title
+                      h2.mdl-card__title-text {{sprint.nombreSprint}}
+                  .mdl-card__supporting-text
+                      p.letras-negras {{sprint.descripcionSprint}}
+                      form(action="/showSprintBacklog" method="GET" class="form")
+                        input(value="{{sprint._id}}" type="hidden" id="sprintElegido" name="sprintElegido")
+                        button.mdl-button.mdl-js-button.mdl-js-ripple-effect(type="submit") Ver

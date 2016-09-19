@@ -1,0 +1,15 @@
+mixin textFieldMixin(name, id, label, model, field, required )
+    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+        label(for=id class="mdl-textfield__label") #{label}
+        input.mdl-textfield__input(type="text" id=id name=name style="color: black" ng-required="#{required}" ng-model="#{model + '.' + field}")
+
+mixin naTextFieldMixin(name, id, label, model, field, required )
+    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+        label(for=id class="mdl-textfield__label") #{label}
+        input.mdl-textfield__input(type="text" id=id name=name style="color: black" ng-required="#{required}" value="#{model + '.' + field}")
+
+
+mixin numberFieldMixin(name, id, label, model, field, required )
+    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+        input.mdl-textfield__input(type="number" id=id name=name style="color: black" ng-required="#{required}" ng-model="#{model + '.' + field}")
+        label(for=id class="mdl-textfield__label") #{label}

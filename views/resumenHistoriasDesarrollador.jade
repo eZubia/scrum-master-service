@@ -1,0 +1,85 @@
+extends ./index.jade
+block content
+  .mdl-grid.mdl-cell.mdl-cell--12-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top(ng-controller="resumenHistoriasDesarrollador" ng-init="init('#{proyecto._id}', '#{user._id}')")
+    .mdl-cell.mdl-cell--3-col-desktop.mdl-cell--3-col-tablet.mdl-cell--2-col-phone
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text #{proyecto.nombreProyecto}
+        .mdl-card__supporting-text
+          p.letras-negras.
+            #{proyecto.descripcionProy}
+      br
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Desarrollador:
+        .mdl-card__supporting-text
+          p.letras-negras.
+            #{user.nombreCompleto}
+      br
+
+    .mdl-cell.mdl-cell--9-col-desktop.mdl-cell--9-col-tablet.mdl-cell--5-col-phone
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Historias sin Finalizar
+      .mdl-card-2.mdl-shadow--6dp-2
+        .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+          .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--2-col-phone(ng-repeat="historia in historiasDesarrollador")
+              .mdl-card.mdl-shadow--2dp
+                  .mdl-card__title
+                      h2.mdl-card__title-text {{historia.nombre}}
+                  .mdl-card__supporting-text
+                      p.letras-negras.
+                        {{historia.descripcion}}
+                  div(class="mdl-card__actions mdl-card--border")
+                    button(class="mdl-button blank-sprint-button" type="button" ng-click="verDetalleHistoria(historia._id)") Ver Detalle
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Historias en Revisión
+      .mdl-card-2.mdl-shadow--2dp-2
+        .mdl-grid.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--12-col-tablet.mdl-cell--4-col-phone.mdl-cell--top
+          .mdl-cell.mdl-cell--4-col-desktop.mdl-cell--4-col-tablet.mdl-cell--2-col-phone(ng-repeat="historia in historiasRevisadas")
+              .mdl-card.mdl-shadow--2dp
+                  .mdl-card__title
+                      h2.mdl-card__title-text {{historia.nombre}}
+                  .mdl-card__supporting-text
+                      p.letras-negras.
+                       {{historia.descripcion}}
+                   div(class="mdl-card__actions mdl-card--border")
+                     button(class="mdl-button blank-sprint-button" type="button" ng-click="verDetalleHistoria(historia._id)") Ver Detalle
+    .mdl-cell.mdl-cell--3-col-desktop.mdl-cell--12-col-tablet.mdl-cell--2-col-phone(ng-if="historiaSeleccionada!==''")
+      .mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+          h2.mdl-card__title-text Detalles De Historia
+        .mdl-card__supporting-text
+          .mdl-grid
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.nombre}}" id="nombreSprint" name="nombreSprint" style="color: black" readonly)
+                  label(for="nombreSprint" class="mdl-textfield__label") Nombre
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.descripcion}}" id="descripcionSprint" name="descripcionSprint" style="color: black" readonly)
+                  label(for="descripcionSprint" class="mdl-textfield__label") Descripción
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.cuando}}" id="cuandoSprint" name="cuandoSprint" style="color: black" readonly)
+                  label(for="cuandoSprint" class="mdl-textfield__label") Cuando
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.entonces}}" id="entoncesSprint" name="entoncesSprint" style="color: black" readonly)
+                  label(for="entoncesSprint" class="mdl-textfield__label") Entonces
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.como}}" id="comoSprint" name="comoSprint" style="color: black" readonly)
+                  label(for="comoSprint" class="mdl-textfield__label") Como
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.quiero}}" id="quieroSprint" name="quieroSprint" style="color: black" readonly)
+                  label(for="quieroSprint" class="mdl-textfield__label") Quiero
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.deTalManeraQue}}" id="deTalManeraQueSprint" name="deTalManeraQueSprint" style="color: black" readonly)
+                  label(for="deTalManeraQueSprint" class="mdl-textfield__label") De Tal Manera Que
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.prioridad}}" id="prioridadSprint" name="prioridadSprint" style="color: black" readonly)
+                  label(for="priordadSprint" class="mdl-textfield__label") Prioridad
+              .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  input.mdl-textfield__input(type="text" value="{{historiaSeleccionada.tamanio}}" id="tamanioSprint" name="tamanioSprint" style="color: black" readonly)
+                  label(for="tamanioSprint" class="mdl-textfield__label") Tamaño
+          div(class="mdl-card__actions mdl-card--border" ng-if="historiaSeleccionada.terminada === false")
+            button(class="mdl-button asignar-desarrollador-button" id="button-asignar-developer" type="button" ng-click="finalizarTarjeta(historiaSeleccionada._id)") Terminar Tarjeta
+          div(class="mdl-card__actions mdl-card--border" ng-if="historiaSeleccionada.terminada === true")
+            button(class="mdl-button asignar-desarrollador-button" id="button-asignar-developer" type="button" ng-click="cerrarDetalle()") Cerrar Detalle

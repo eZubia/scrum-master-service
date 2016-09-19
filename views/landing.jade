@@ -1,0 +1,133 @@
+html(lang='en', xmlns='http://www.w3.org/1999/html' ng-app="app")
+    head
+        link(rel='icon', type='image/png', href='static/images/group.png')
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='description', content='A front-end template that helps you build fast, modern mobile web apps.')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title Scrum Team
+        // Add to homescreen for Chrome on Android
+        meta(name='mobile-web-app-capable', content='yes')
+        // Add to homescreen for Safari on iOS
+        meta(name='apple-mobile-web-app-capable', content='yes')
+        meta(name='apple-mobile-web-app-status-bar-style', content='black')
+        meta(name='apple-mobile-web-app-title', content='Material Design Lite')
+        // Tile icon for Win8 (144x144 + tile color)
+        meta(name='msapplication-TileImage', content='static/images/touch/ms-touch-icon-144x144-precomposed.png')
+        meta(name='msapplication-TileColor', content='#3372DF')
+        // SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones
+        //
+          <link rel="canonical" href="http://www.example.com/">
+        link(href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,100,700,900', rel='stylesheet', type='text/css')
+        link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+        link(href='static/css/application.css' rel='stylesheet' type="text/css")
+        link(href='static/css/lib/getmdl-select.min.css' rel='stylesheet' type="text/css")
+        link(href='static/css/lib/nv.d3.css' rel='stylesheet' type="text/css")
+        link(type="text/css" src="static/bower_components/ngToast/dist/ngToast.min.css")
+        link(href='static/css/landing.css' rel='stylesheet' type="text/css")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    body
+        .mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+            div
+                .mdl-layout__header-row
+                    span.android-title.mdl-layout-title
+                        //img.android-logo-image(src='static/images/android-logo.png')
+                    // Add spacer, to align navigation to the right in desktop
+                    .android-header-spacer.mdl-layout-spacer
+                    .android-search-box.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right.mdl-textfield--full-width
+                        .mdl-textfield__expandable-holder
+                            input#search-field.mdl-textfield__input(type='text')
+                    // Navigation
+                    .android-navigation-container
+            .android-content.mdl-layout__content
+                a(name='top')
+                .android-be-together-section.mdl-typography--text-center
+                    .logo-font.android-slogan Scrum Team
+                    .logo-font.android-sub-slogan La herramienta que te ayuda a manejar a tu equipo y tus proyectos
+                    br
+                    button(class="mdl-button login-modal-button") Iniciar Sesión
+                    pre
+                    button(class="mdl-button dialog-register-button") Registrarme
+
+                    dialog(class="mdl-dialog login-modal")
+                        h4.mdl-dialog__title Iniciar Sesión
+                        br
+                        form(method="POST" action="/login")
+                            div
+                                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                                    input.mdl-textfield__input(type="text" id="email" name="local.email" style="color: black" required="required")
+                                    label(for="email" class="mdl-textfield__label") Correo
+                                i(class="material-icons") face
+                            div
+                                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                                    input.mdl-textfield__input(type="password" id="password" style="color: black" name="password")
+                                    label(for="password" class="mdl-textfield__label" required="required") Contraseña
+                                i(class="material-icons") lock
+                            div
+                                a(href="/auth/facebook" style="margin-right:3em")
+                                    img(src="static/images/facebook.png")
+                                a(href="/auth/twitter" style="margin-right:2em")
+                                    img(src="static/images/twitter.png")
+                                a(href="/auth/google" style="margin-left:1em")
+                                    img(src="static/images/gplus.png" )
+                                br
+                                br
+                            button(type="submit" class="mdl-button") Iniciar Sesión
+
+                    dialog(class="mdl-dialog dialog-register-modal")
+                        h4.mdl-dialog__title Registrarme
+                        br
+                        form(method="POST" action="/register")
+                            div
+                                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                                    input.mdl-textfield__input(type="text" id="correo" name="local.email" style="color: black" required="required")
+                                    label(for="correo" class="mdl-textfield__label") Correo
+                                i(class="material-icons") face
+                            div
+                                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                                    input.mdl-textfield__input(type="password" id="contraseña" style="color: black" name="password")
+                                    label(for="contraseña" class="mdl-textfield__label" required="required") Contraseña
+                                i(class="material-icons") lock
+                            div
+                                a(href="/auth/facebook" style="margin-right:3em")
+                                    img(src="static/images/facebook.png")
+                                a(href="/auth/twitter" style="margin-right:2em")
+                                    img(src="static/images/twitter.png")
+                                a(href="/auth/google" style="margin-left:1em")
+                                    img(src="static/images/gplus.png" )
+                                br
+                                br
+                            button(type="submit" class="mdl-button") Registrarse
+
+
+
+        script.
+            var modalLogin = document.querySelector('.login-modal');
+            var showDialogLogin = document.querySelector('.login-modal-button');
+            showDialogLogin.addEventListener('click', function () {
+                modalLogin.showModal();
+            });
+            if (!modalLogin.showModal) {
+                dialogPolyfill.registerDialog(modalLogin);
+            }
+
+            var registrarModal = document.querySelector('.dialog-register-modal');
+            var showDialogRegisterButton = document.querySelector('.dialog-register-button');
+            showDialogRegisterButton.addEventListener('click', function () {
+                registrarModal.showModal();
+            });
+            if (!registrarModal.showModal) {
+                dialogPolyfill.registerDialog(registrarModal);
+            }
+
+        script(type="text/javascript" src="static/bower_components/d3/d3.min.js")
+        script(type="text/javascript" src="static/bower_components/getmdl-select/getmdl-select.min.js")
+        script(type="text/javascript" src="static/bower_components/material-design-lite/material.min.js")
+        script(type="text/javascript" src="static/bower_components/nvd3/build/nv.d3.min.js")
+        //angular
+        script(type="text/javascript" src="static/bower_components/angular/angular.min.js")
+        script(type="text/javascript" src="static/js/angularApp.js")
+        //ngToast
+        script(type="text/javascript" src="static/bower_components/angular-sanitize/angular-sanitize.min.js")
+        script(type="text/javascript" src="static/bower_components/angular-animate/angular-animate.min.js")
+        script(type="text/javascript" src="static/bower_components/ngToast/dist/ngToast.min.js")

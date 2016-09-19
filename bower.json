@@ -1,0 +1,35 @@
+{
+  "name": "getmdl-dashboard",
+  "version": "1.0.0",
+  "homepage": "https://github.com/CreativeIT/getmdl-dashboard",
+  "authors": [
+    "CreativeIT"
+  ],
+  "description": "Free dashboard template with Material Design Lite",
+  "main": "dist/index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-design-lite": "1.1.1",
+    "d3": "3.5.14",
+    "nvd3": "1.8.2",
+    "getmdl-select": "*",
+    "angular": "^1.5.4",
+    "ngToast": "ngtoast#^2.0.0",
+    "angular-animate": "^1.5.5",
+    "material-design-icons": "^2.2.3",
+    "angular-route": "^1.5.5",
+    "socket.io-client": "^1.4.6",
+    "mdl-selectfield": "^1.0.1"
+  },
+  "resolutions": {
+    "material-design-lite": "~1.1.3"
+  }
+}

@@ -1,0 +1,55 @@
+extends ./index.jade
+block content
+
+    .mdl-card.mdl-shadow--2dp.employer-form
+        .mdl-card__title
+            h2 Mi perfil
+        .mdl-card__supporting-text.white-background(ng-controller="profileCtrl")
+            form(action="/profile" method="POST" class="form")
+                .mdl-grid
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        label(for="nombre" class="mdl-textfield__label") Nombre
+                        input.mdl-textfield__input(type="text" id="nombre" name="nombre" style="color: black" ng-required="true" value="#{user.nombre || ''}")
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        label(for="apellidos" class="mdl-textfield__label") Apellidos
+                        input.mdl-textfield__input(type="text" id="apellidos" name="apellidos" style="color: black" ng-required="true" value="#{user.apellidos || ''}")
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group.is-dirty
+                        label(for="fechaNacimiento" class="mdl-textfield__label") Fecha Nacimiento
+                        input.mdl-textfield__input(type="date" id="fechaNacimiento" name="fechaNacimiento" style="color: black" ng-required="true" value="#{user.fechaNacimiento || ''}")
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        label(for="rfc" class="mdl-textfield__label") RFC
+                        input.mdl-textfield__input(type="text" id="rfc" name="rfc" style="color: black" ng-required="true" value="#{user.rfc || ''}")
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        label(for="curp" class="mdl-textfield__label") CURP
+                        input.mdl-textfield__input(type="text" id="curp" name="curp" style="color: black" ng-required="true" value="#{user.curp || ''}")
+
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        label(for="domicilio" class="mdl-textfield__label") Domicilio
+                        input.mdl-textfield__input(type="text" id="domicilio" name="domicilio" style="color: black" ng-required="true" value="#{user.domicilio || ''}")
+
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        label(for="habilidad" class="mdl-textfield__label") Habilidad
+                        input.mdl-textfield__input(type="text" id="habilidad" name="habilidad" style="color: black" ng-model="user.habilidad")
+
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--12-col.input-group
+                        .mdl-cell.mdl-cell--8-col.mdl-textfield.mdl-js-textfield.getmdl-select
+                            p(style="color: red") Nivel
+                            select(class="mdl-textfield__input" type="text" id="email_type" ng-model="user.nivel")
+                                option.mdl-menu__item Junior
+                                option.mdl-menu__item Senior
+                                option.mdl-menu__item Master
+                    button(id="add" ng-click="agregarHabilidad()" type="button" style="width: 150px" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") Agregar
+                    table.mdl-data-table.mdl-js-data-table.mdl-data-table.projects-table(ng-init="init(#{JSON.stringify(habilidades)})")
+                        thead
+                            tr
+                                th.mdl-data-table__cell--non-numeric Habilidad
+                                th.mdl-data-table__cell--non-numeric Ranking
+                                th.mdl-data-table__cell--non-numeric
+                        tbody
+                            tr(ng-repeat="skill in skills")
+                                td.mdl-data-table__cell--non-numeric {{skill.habilidad}}
+                                td.mdl-data-table__cell--non-numeric {{skill.nivel}}
+                                td.mdl-data-table__cell--non-numeric
+                                    button(type="button" ng-click="removeSkill($index)" style="width: 150px" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") Quitar
+                    input(type="hidden" name="habilidades" value="{{skills}}")
+                    button(id="submit_button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 150px") Actualizar
