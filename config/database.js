@@ -3,5 +3,5 @@
  */
 
 module.exports = {
-    'url' : 'mongodb://root:12345@ds023052.mlab.com:23052/byb_system'
+    'url' : 'mongodb://scrumAdmin:12345@ds035806.mlab.com:35806/scrum-master-service'
 }

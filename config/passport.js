@@ -2,7 +2,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var Usuario = require('../models/usuarios');
+var Usuario = require('../models/Usuario');
 var configAuth = require('./auth');
 
 module.exports = function (passport) {
@@ -72,7 +72,7 @@ module.exports = function (passport) {
             });
         }));
 
-    //Facebook
+    // Facebook
     passport.use(new FacebookStrategy({
             clientID: configAuth.facebookAuth.clientID,
             clientSecret: configAuth.facebookAuth.clientSecret,

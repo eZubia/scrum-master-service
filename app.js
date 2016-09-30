@@ -25,10 +25,9 @@ var session = require("express-session");
 //
 var configDB = require('./config/database.js');
 mongoose.connect(configDB.url);
-var Usuario = require('./models/usuarios').Usuario;
+var Usuario = require('./models/Usuario.js').Usuario;
 //
 // //Configurations
-//TODO: descomentar logger
 // app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json()); //Application JSON
@@ -86,9 +85,21 @@ roles.use(function (req, action) {
 var server = require('http').Server(app);
 var io = require("socket.io")(server);
 
+function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/landing');
+    }
 
-require('./routes.js')(app, passport, roles, mongoose, io);
+
 require('./config/passport')(passport);
+require('./routes.js')(app, passport, roles, mongoose, io,isLoggedIn);
+require('./controllers/proyectos.js')(app, passport, roles, mongoose, io, isLoggedIn);
+require('./controllers/historiasUsuarios.js')(app, passport, roles, mongoose, io, isLoggedIn);
+require('./controllers/liberacionesBacklogs.js')(app, passport, roles, mongoose, io, isLoggedIn);
+require('./controllers/sprints.js')(app, passport, roles, mongoose, io, isLoggedIn);
+require('./controllers/usuarios.js')(app, passport, roles, mongoose, io, isLoggedIn);
 
 app.get('/partials/:name', function (req, res) {
     var name = req.params.name;
